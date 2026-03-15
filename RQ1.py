@@ -41,3 +41,59 @@ summary = all_data.groupby("group").agg(
 ).reset_index()
 
 print(summary)
+
+# create boxplot for each group for relative parallax error
+groups = ["Nearby", "Galactic Plane", "Pleiades", "Hyades"]
+data_for_box = [all_data[all_data["group"] == g]["relative_parallax_error"] for g in groups]
+
+plt.figure(figsize=(8, 6))
+plt.boxplot(data_for_box, tick_labels=groups, showfliers=False)
+plt.ylabel("Relative Parallax Error")
+plt.title("Relative Parallax Error by Group")
+plt.show()
+
+# Create histograms of naive distances by group
+fig, axes = plt.subplots(2, 2, figsize = (12,10))
+
+for ax, group in zip(axes.flatten(), groups):
+    subset = all_data[all_data["group"] == group]
+    # Filter out extremely large distance for galactic plane data
+    subset_dist = subset["naive_distance_pc"]
+    subset_dist = [dist for dist in subset_dist if dist < 20000]
+    ax.hist(subset_dist, bins = 50)
+    ax.set_title(group)
+    ax.set_xlabel("Naive Distance (pc)")
+    ax.set_ylabel("Count")
+
+plt.tight_layout()
+plt.show()
+
+# Plot comparing difference between naive distances  and median distances in clusters with relative parallax error
+# if larger parallax error produces larger distance difference, that points towards uncertainty causing distortion
+
+for cluster_name, cluster_df in [("Pleiades", pleiades), ("Hyades", hyades)]:
+    cluster_df["distance_residual"] = cluster_df["naive_distance_pc"] - cluster_df["naive_distance_pc"].median()
+
+    plt.figure(figsize = (12, 10))
+    plt.scatter(cluster_df["relative_parallax_error"], cluster_df["distance_residual"], alpha = 0.7)
+    plt.axhline(0, color = "black", linestyle = "--")
+    plt.xlabel("Relative Parallax Error")
+    plt.ylabel("Distance Residual from Cluster Median (pc)")
+    plt.title(f"{cluster_name}: Distance Residual vs Relative Parallax Error")
+    plt.show()
+
+
+# Plot magnitude vs relative error
+# If there is a strong corrletaion,  shows error is systematic not random
+
+plt.figure(figsize = (12, 10))
+
+for group in groups:
+    subset = all_data[all_data["group"] == group]
+    plt.scatter(subset["phot_g_mean_mag"], subset["relative_parallax_error"], s = 8, alpha = 0.4, label = group)
+
+plt.xlabel("G Magnitude (Lower is Brighter)")
+plt.ylabel("Relative Parallax Error")
+plt.title("Relative Parallax Error vs Apparent Brightness")
+plt.legend()
+plt.show()
