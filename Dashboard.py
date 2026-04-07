@@ -644,6 +644,7 @@ gui = Gui(pages=pages)
 if __name__ == "__main__":
     gui.run(
         title           = "Gaia Parallax Uncertainty",
+        host            = "0.0.0.0",
         port            = int(os.environ.get("PORT", 5000)),
         css_file        = "style.css",
         use_reloader    = False,
