@@ -40,23 +40,23 @@ def prep_data(df, group_name, sample_n = None):
  
     return df
 
-# Load datasets
-nearby = pd.read_csv("project data\\Nearby_stars.csv")
-gplane = pd.read_csv("project data\\Galactic_Plane_Stars.csv")
-pleiades = pd.read_csv("project data\\pleiades_3sd_51_members.csv")
-hyades = pd.read_csv("project data\\hyades_cluster_320_members.csv")
+# Load + prep datasets using path join so it works on windows and linux
+nearby      = pd.read_csv(os.path.join("project data", "Nearby_Stars.csv"))
+gplane      = pd.read_csv(os.path.join("project data", "Galactic_Plane_Stars.csv"))
+pleiades    = pd.read_csv(os.path.join("project data", "pleiades_3sd_51_members.csv"))
+hyades      = pd.read_csv(os.path.join("project data", "hyades_cluster_320_members.csv"))
 
 # Cap sample size to 30k for performance
-nearby = prep_data(nearby, "Nearby", MAX_DATA_SIZE)
-gplane = prep_data(gplane, "Galactic Plane", MAX_DATA_SIZE)
-pleiades = prep_data(pleiades, "Pleiades")
-hyades = prep_data(hyades, "Hyades")
+nearby      = prep_data(nearby, "Nearby", MAX_DATA_SIZE)
+gplane      = prep_data(gplane, "Galactic Plane", MAX_DATA_SIZE)
+pleiades    = prep_data(pleiades, "Pleiades")
+hyades      = prep_data(hyades, "Hyades")
 
 # Create full datasets for certain metrics
-nearby_full = pd.read_csv("project data\\Nearby_stars.csv")
+nearby_full = pd.read_csv(os.path.join("project data", "Nearby_Stars.csv"))
 nearby_full = prep_data(nearby_full, "Nearby")
 
-gplane_full = pd.read_csv("project data\\Galactic_Plane_Stars.csv")
+gplane_full = pd.read_csv(os.path.join("project data", "Galactic_Plane_Stars.csv"))
 gplane_full = prep_data(gplane_full, "Galactic Plane")
 
 all_data = pd.concat([nearby, gplane, pleiades, hyades], ignore_index = True)
