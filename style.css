@@ -1,0 +1,15 @@
+.taipy-navbar {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.block-element {
+    max-width: 100% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
