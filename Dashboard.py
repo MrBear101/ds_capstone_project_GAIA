@@ -8,6 +8,7 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from taipy.gui import Gui, navigate
+import os
 
 # global variables
 MAX_DATA_SIZE = 30_000
@@ -643,7 +644,7 @@ gui = Gui(pages=pages)
 if __name__ == "__main__":
     gui.run(
         title           = "Gaia Parallax Uncertainty",
-        port            = 5000,
+        port            = int(os.environ.get("PORT", 5000)),
         css_file        = "style.css",
         use_reloader    = False,
         debug           = False,
