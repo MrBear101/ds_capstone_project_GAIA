@@ -590,7 +590,7 @@ Since all stars in a cluster are physically close, they should all have approxim
 - **White dashed line** - zero residual
 - **Gold dotted line** - mean residual
 
-Stars with hgiher relative error show greater spread above and blow zero. Implying that uncertainty translates into distance estimation error.
+Stars with higher relative error show greater spread above and blow zero. Implying that uncertainty translates into distance estimation error.
 
 <|chart|figure={residual_fig}|>
 """
