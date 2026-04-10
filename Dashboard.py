@@ -561,6 +561,9 @@ def go_rq1(state):
 def go_rq2(state):
     navigate(state, "RQ2")
 
+def go_rq3(state):
+    navigate(state, "RQ3")
+
 def on_rq3_group_change(state):
     state.rq3_single_fig = make_rq3_single_fig(
         state.selected_rq3_group, state.selected_rq3_model
@@ -606,7 +609,7 @@ home_md = """
 <br/>
 ### Navigation
 
-<|layout|columns=1 1 1 1|
+<|layout|columns=1 1 1 1 1|
 <|Overview|button|on_action=go_overview|>
  
 <|Uncertainty|button|on_action=go_uncertainty|>
@@ -614,6 +617,8 @@ home_md = """
 <|RQ1 - Distance Bias|button|on_action=go_rq1|>
  
 <|RQ2 - H-R Degradation|button|on_action=go_rq2|>
+
+<|RQ3 - Predicting Parallax Error|button|on_action=go_rq3|>
 |>
 <br/>
 
