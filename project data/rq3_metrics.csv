@@ -1,0 +1,9 @@
+Group,Model,R²,RMSE
+Nearby,Lasso,0.8438,0.021533
+Nearby,GBR,0.9756,0.008512
+Galactic Plane,Lasso,0.8707,0.02006
+Galactic Plane,GBR,0.9774,0.008391
+Pleiades,Lasso,0.6737,0.03797
+Pleiades,GBR,0.8916,0.021887
+Hyades,Lasso,0.9621,0.025049
+Hyades,GBR,0.9738,0.020835

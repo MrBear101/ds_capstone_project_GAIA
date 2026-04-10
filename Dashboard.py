@@ -10,6 +10,7 @@ from plotly.subplots import make_subplots
 from taipy.gui import Gui, navigate
 import os
 
+
 # global variables
 MAX_DATA_SIZE = 30_000
 
@@ -61,6 +62,25 @@ gplane_full = prep_data(gplane_full, "Galactic Plane")
 
 all_data = pd.concat([nearby, gplane, pleiades, hyades], ignore_index = True)
 all_data_full = pd.concat([nearby_full, gplane_full, pleiades, hyades], ignore_index = True)
+
+# RQ3 Data
+rq3_importances  = pd.read_csv(os.path.join("project data", "rq3_importances.csv"))
+rq3_metrics_table = pd.read_csv(os.path.join("project data", "rq3_metrics.csv"))
+ 
+# Build a nested dict for easy lookup: rq3_results[group][model] = importance_df
+rq3_results = {}
+for _group in rq3_importances["group"].unique():
+    rq3_results[_group] = {}
+    for _model in rq3_importances["model"].unique():
+        _mask = (
+            (rq3_importances["group"] == _group) &
+            (rq3_importances["model"] == _model)
+        )
+        rq3_results[_group][_model] = (
+            rq3_importances[_mask][["feature", "importance"]]
+            .sort_values("importance", ascending=True)
+            .reset_index(drop=True)
+        )
 
 # Initial summary table
 summary = all_data_full.groupby("group").agg(
@@ -393,6 +413,87 @@ def make_hr_filter_fig(dataset="Galactic Plane", max_relative_error=1.0):
     fig.update_layout(**layout)
     return fig
 
+# RQ3 Charts
+
+# single figure
+def make_rq3_single_fig(group="Nearby", model="Lasso"):
+    """Horizontal bar chart of feature importances for one group and model."""
+    imp_df = rq3_results[group][model]
+    r2_val = rq3_metrics_table[
+        (rq3_metrics_table["Group"] == group) &
+        (rq3_metrics_table["Model"] == model)
+    ]["R²"].values[0]
+    rmse_val = rq3_metrics_table[
+        (rq3_metrics_table["Group"] == group) &
+        (rq3_metrics_table["Model"] == model)
+    ]["RMSE"].values[0]
+ 
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x           = imp_df["importance"],
+        y           = imp_df["feature"],
+        orientation = "h",
+        marker_color= COLORS[group],
+        opacity     = 0.85,
+    ))
+ 
+    x_label = "Importance (|coefficient|)" if model == "Lasso" else "Importance (gain)"
+    layout  = _base_layout(
+        f"{group} — {model}  |  R²={r2_val}  RMSE={rmse_val}",
+        height=600,
+    )
+    layout["xaxis"]["title"] = x_label
+    layout["yaxis"]["title"] = "Gaia Attribute"
+    layout["margin"]["l"]    = 220
+    fig.update_layout(**layout)
+    return fig
+
+# Compare figure
+def make_rq3_compare_fig(model="Lasso"):
+    """2×2 subplot comparing feature importances across all four groups."""
+    groups    = list(COLORS.keys())
+    positions = [(1, 1), (1, 2), (2, 1), (2, 2)]
+ 
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=groups,
+        horizontal_spacing=0.22,
+        vertical_spacing=0.20,
+    )
+ 
+    for (row, col), group in zip(positions, groups):
+        imp_df = rq3_results[group][model]
+        fig.add_trace(
+            go.Bar(
+                x           = imp_df["importance"],
+                y           = imp_df["feature"],
+                orientation = "h",
+                marker_color= COLORS[group],
+                opacity     = 0.85,
+                name        = group,
+                showlegend  = False,
+            ),
+            row=row, col=col,
+        )
+        fig.update_xaxes(gridcolor=GRID, linecolor=GRID, row=row, col=col)
+        fig.update_yaxes(
+            gridcolor=GRID, linecolor=GRID,
+            tickfont=dict(size=10),
+            row=row, col=col,
+        )
+ 
+    fig.update_layout(
+        title=dict(
+            text=f"Feature Importance Across All Groups — {model}<br><br>",
+            font=dict(size=15, color=TEXT),
+        ),
+        paper_bgcolor = "rgba(0,0,0,0)",
+        plot_bgcolor  = BG,
+        font          = dict(color=TEXT, family="'Segoe UI', Inter, sans-serif", size=11),
+        height        = 750,
+        margin        = dict(l=180, r=30, t=100, b=65),
+    )
+    return fig
 
 # Initial State
 
@@ -419,6 +520,15 @@ selected_rq2_dataset    = "Galactic Plane"
 max_relative_error_hr      = 0.50
 hr_bins_fig             = make_hr_bins_fig()
 hr_filter_fig           = make_hr_filter_fig("Galactic Plane", 0.50)
+
+# RQ3
+rq3_groups_list          = ["Nearby", "Galactic Plane", "Pleiades", "Hyades"]
+rq3_models_list          = ["Lasso", "GBR"]
+selected_rq3_group       = "Nearby"
+selected_rq3_model       = "Lasso"
+selected_rq3_cmp_model   = "Lasso"
+rq3_single_fig           = make_rq3_single_fig("Nearby", "Lasso")
+rq3_compare_fig          = make_rq3_compare_fig("Lasso")
  
 
 # Callbacks
@@ -450,6 +560,19 @@ def go_rq1(state):
     
 def go_rq2(state):
     navigate(state, "RQ2")
+
+def on_rq3_group_change(state):
+    state.rq3_single_fig = make_rq3_single_fig(
+        state.selected_rq3_group, state.selected_rq3_model
+    )
+ 
+def on_rq3_model_change(state):
+    state.rq3_single_fig = make_rq3_single_fig(
+        state.selected_rq3_group, state.selected_rq3_model
+    )
+ 
+def on_rq3_cmp_model_change(state):
+    state.rq3_compare_fig = make_rq3_compare_fig(state.selected_rq3_cmp_model)
 
 # Create TaiPy table for home page
 home_table = pd.DataFrame({
@@ -627,6 +750,44 @@ Select a dataset and drag the slider to restrict whcih stars are shown. Lower th
 
 """
 
+rq3_md = """
+# Research Question 3 - Predicting Parallax Error
+
+**Research Question:** To what extent can Gaia data attributes serve as indicators for predicting parallax error?
+
+Two models were trained on each stellar population to predict `parallax_error` from observable GAIA attributes: **Lasso** regression (linear, with automatic feature selection via regularization) and **Gradient Boosting** (non-linear).
+Comparing their feature importances reveals which attributes most strongly influence measurement uncertainty, and whether that relationship remains constant across stellar populations.
+
+---
+
+## Model Performance
+
+<|{rq3_metrics_table}|table|show_all=True|>
+
+---
+
+## Feature Importance - Single Group
+
+Select a group and model to explore which Gaia attributes best predict parallax error for that population.
+
+<|layout|columns=1 1|
+<|{selected_rq3_group}|selector|lov={rq3_groups_list}|dropdown|on_change=on_rq3_group_change|>
+<|{selected_rq3_model}|selector|lov={rq3_models_list}|on_change=on_rq3_model_change|>
+|>
+ 
+<|chart|figure={rq3_single_fig}|>
+ 
+---
+
+## Feature Importance - All Groups 
+
+Compare how feature importances differ across all four stellar populations for a given model. Differences reveal how the factors that influence measurement uncertainty change with distance, crowding, and observational attributes.
+
+<|{selected_rq3_cmp_model}|selector|lov={rq3_models_list}|on_change=on_rq3_cmp_model_change|>
+ 
+<|chart|figure={rq3_compare_fig}|>
+"""
+
 
 # PUT IT TOGETHER AND RUN
 
@@ -637,6 +798,7 @@ pages = {
     "Uncertainty":  uncertainty_md,
     "RQ1":          rq1_md,
     "RQ2":          rq2_md,
+    "RQ3":          rq3_md,
 }
  
 gui = Gui(pages=pages)

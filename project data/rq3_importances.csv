@@ -1,0 +1,97 @@
+feature,importance,group,model
+ra,0.001693277076906831,Nearby,Lasso
+dec,0.0026854524978427085,Nearby,Lasso
+pm,0.001608488326648374,Nearby,Lasso
+pmra,0.0006674001570137457,Nearby,Lasso
+pmdec,1.0487095569125601e-05,Nearby,Lasso
+phot_g_mean_mag,0.02588892789793397,Nearby,Lasso
+bp_rp,0.001599697836696273,Nearby,Lasso
+astrometric_excess_noise,0.04440186688333055,Nearby,Lasso
+astrometric_excess_noise_sig,0.005553763736707387,Nearby,Lasso
+visibility_periods_used,0.006333365559712138,Nearby,Lasso
+ruwe,0.0031154119515841593,Nearby,Lasso
+l,0.00023302186328947347,Nearby,Lasso
+b,0.00490535073597663,Nearby,Lasso
+ra,0.000696329037137843,Nearby,GBR
+dec,0.0004413490540215559,Nearby,GBR
+pm,7.782541535472645e-05,Nearby,GBR
+pmra,0.00037395278420155107,Nearby,GBR
+pmdec,0.0003056693192030582,Nearby,GBR
+phot_g_mean_mag,0.34985981374953157,Nearby,GBR
+bp_rp,0.0007276199254268016,Nearby,GBR
+astrometric_excess_noise,0.6244602485189572,Nearby,GBR
+astrometric_excess_noise_sig,0.0012152661268305704,Nearby,GBR
+visibility_periods_used,0.020332786379638774,Nearby,GBR
+ruwe,0.0009808752631909872,Nearby,GBR
+l,0.00032424850301555647,Nearby,GBR
+b,0.00020401592348967806,Nearby,GBR
+ra,0.0009511440901898785,Galactic Plane,Lasso
+dec,0.0,Galactic Plane,Lasso
+pm,0.001146768113585756,Galactic Plane,Lasso
+pmra,0.00020436761593767462,Galactic Plane,Lasso
+pmdec,0.0,Galactic Plane,Lasso
+phot_g_mean_mag,0.03180735961729847,Galactic Plane,Lasso
+bp_rp,0.0007599836466109645,Galactic Plane,Lasso
+astrometric_excess_noise,0.039977819752944115,Galactic Plane,Lasso
+astrometric_excess_noise_sig,0.0029230326245354727,Galactic Plane,Lasso
+visibility_periods_used,0.0074453922640987345,Galactic Plane,Lasso
+ruwe,0.004477265398527478,Galactic Plane,Lasso
+l,0.0,Galactic Plane,Lasso
+b,0.001985065641411304,Galactic Plane,Lasso
+ra,0.0006730891155587892,Galactic Plane,GBR
+dec,0.0005398382063133622,Galactic Plane,GBR
+pm,0.00015902455177317052,Galactic Plane,GBR
+pmra,0.0002579383028038996,Galactic Plane,GBR
+pmdec,0.0002570066125146139,Galactic Plane,GBR
+phot_g_mean_mag,0.39346958925636566,Galactic Plane,GBR
+bp_rp,0.0003207370012641086,Galactic Plane,GBR
+astrometric_excess_noise,0.5825894904507155,Galactic Plane,GBR
+astrometric_excess_noise_sig,0.0005300271198309195,Galactic Plane,GBR
+visibility_periods_used,0.017031100476459327,Galactic Plane,GBR
+ruwe,0.0010160928927907913,Galactic Plane,GBR
+l,0.00023867051906787138,Galactic Plane,GBR
+b,0.0029173954945417944,Galactic Plane,GBR
+ra,0.0013840087080577287,Pleiades,Lasso
+dec,0.0,Pleiades,Lasso
+pm,0.0,Pleiades,Lasso
+pmra,0.0,Pleiades,Lasso
+pmdec,0.0,Pleiades,Lasso
+phot_g_mean_mag,0.03427468716003005,Pleiades,Lasso
+bp_rp,0.0,Pleiades,Lasso
+astrometric_excess_noise,0.0583361932315698,Pleiades,Lasso
+astrometric_excess_noise_sig,0.0,Pleiades,Lasso
+visibility_periods_used,0.0,Pleiades,Lasso
+ruwe,0.0,Pleiades,Lasso
+ra,0.017375634776974867,Pleiades,GBR
+dec,0.012233236532912296,Pleiades,GBR
+pm,0.011551127670792916,Pleiades,GBR
+pmra,0.03574833137054163,Pleiades,GBR
+pmdec,0.02013878598495434,Pleiades,GBR
+phot_g_mean_mag,0.4229606124335725,Pleiades,GBR
+bp_rp,0.1789923322513468,Pleiades,GBR
+astrometric_excess_noise,0.27004699751103817,Pleiades,GBR
+astrometric_excess_noise_sig,0.014353439077825492,Pleiades,GBR
+visibility_periods_used,0.0030820790949003802,Pleiades,GBR
+ruwe,0.013517423295140467,Pleiades,GBR
+ra,0.01099000287910602,Hyades,Lasso
+dec,0.00240450723241769,Hyades,Lasso
+pm,0.0,Hyades,Lasso
+pmra,0.0,Hyades,Lasso
+pmdec,0.0,Hyades,Lasso
+phot_g_mean_mag,0.022849749708945703,Hyades,Lasso
+bp_rp,0.006168707883706266,Hyades,Lasso
+astrometric_excess_noise,0.13026963049573445,Hyades,Lasso
+astrometric_excess_noise_sig,0.0015251822250944421,Hyades,Lasso
+visibility_periods_used,0.011924007641934695,Hyades,Lasso
+ruwe,0.02756536576541693,Hyades,Lasso
+ra,0.010647458128786562,Hyades,GBR
+dec,0.002049700326638861,Hyades,GBR
+pm,0.0003179951995913402,Hyades,GBR
+pmra,0.005997808390147223,Hyades,GBR
+pmdec,0.001152947326265908,Hyades,GBR
+phot_g_mean_mag,0.09131910585678162,Hyades,GBR
+bp_rp,0.010095158840141222,Hyades,GBR
+astrometric_excess_noise,0.814674701894295,Hyades,GBR
+astrometric_excess_noise_sig,0.021549398106396257,Hyades,GBR
+visibility_periods_used,0.03448791351084037,Hyades,GBR
+ruwe,0.00770781242011562,Hyades,GBR
