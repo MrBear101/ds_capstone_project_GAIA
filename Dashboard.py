@@ -316,6 +316,7 @@ def make_hr_bins_fig():
         subplot_titles=titles,
         shared_yaxes=True,
         horizontal_spacing=0.04,
+        shared_xaxes=True
     )
     for i, label in enumerate(["Low", "Medium", "High"]):
         sub = gp[gp["uncertainty_bin"] == label].sample(n=min(8_000, (gp["uncertainty_bin"]==label).sum()), random_state=42)
@@ -459,6 +460,7 @@ def make_rq3_compare_fig(model="Lasso"):
         subplot_titles=groups,
         horizontal_spacing=0.22,
         vertical_spacing=0.20,
+        shared_xaxes=True
     )
  
     for (row, col), group in zip(positions, groups):
